@@ -1,0 +1,17 @@
+# VMware files
+*.vmdk
+*.vmsd
+*.vmx
+*.vmxf
+*.vmem
+*.nvram
+*.log
+
+# Windows temp files
+*.tmp
+*.bak
+
+# Large log exports
+*.evtx
+*.csv
+*.pcapng
