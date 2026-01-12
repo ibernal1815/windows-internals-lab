@@ -1,0 +1,61 @@
+# OS and editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+.vs/
+
+# Windows shortcut files
+*.lnk
+
+# Logs and captures (often large)
+*.pml
+*.pmc
+*.etl
+*.evtx
+*.cab
+*.dmp
+*.hdmp
+*.mdmp
+*.wer
+*.log
+
+# Sysmon exports and related artifacts
+Sysmon/Exports/
+Sysmon/Logs/
+
+# Generic evidence folders that may contain large binaries
+**/Evidence/Raw/
+**/Evidence/Exports/
+
+# Archives
+*.zip
+*.7z
+*.rar
+
+# VM artifacts (do not store VM disks in repo)
+*.vmdk
+*.vmsd
+*.vmsn
+*.vmx
+*.vmxf
+*.nvram
+*.log
+*.ova
+*.ovf
+
+# Credentials and secrets
+.env
+*.key
+*.pem
+*.pfx
+*.p12
+
+# Temporary files
+*.tmp
+*.temp
