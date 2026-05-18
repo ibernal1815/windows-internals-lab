@@ -7,8 +7,9 @@ This document summarizes the purpose of each Sysinternals tool used in the proje
 Process Explorer provides a detailed view of running processes and their relationships.
 
 Key uses in this project include:
-- Identifying parent child process chains
-- Examining command line arguments
+
+- Identifying parent-child process chains
+- Examining command-line arguments
 - Inspecting integrity levels and security tokens
 - Viewing loaded DLLs and handles
 
@@ -19,6 +20,7 @@ It is often the first tool used to establish context before deeper investigation
 Process Monitor captures detailed system activity across several subsystems.
 
 In this project, it is primarily used to:
+
 - Observe application startup behavior
 - Identify file and registry access patterns
 - Detect access denied conditions
@@ -31,6 +33,7 @@ Filtering is essential. Unfiltered output is intentionally avoided.
 Autoruns provides visibility into the many persistence mechanisms supported by Windows.
 
 It is used to:
+
 - Compare different startup mechanisms
 - Identify why software launches automatically
 - Understand how legitimate software maintains state across reboots
@@ -42,6 +45,7 @@ This tool reinforces that persistence is not inherently malicious.
 TCPView maps network connections to processes in real time.
 
 It is used to:
+
 - Confirm which processes are responsible for network activity
 - Distinguish local system communication from external connections
 - Support investigations into unexpected network usage
@@ -51,6 +55,7 @@ It is used to:
 PsExec enables remote process execution using administrative credentials.
 
 In this lab, it is used to:
+
 - Demonstrate legitimate administrative tooling
 - Observe authentication and execution traces
 - Correlate remote actions with logs and telemetry
@@ -60,6 +65,7 @@ In this lab, it is used to:
 Sysmon records detailed system events to the Windows event log.
 
 It is used to:
+
 - Capture process creation events over time
 - Record network connections and image loads
 - Provide historical context that complements live tools
