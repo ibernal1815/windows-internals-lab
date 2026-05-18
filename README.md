@@ -51,8 +51,8 @@ Each scenario follows the same flow: background and question, observation using 
 
 ## Lab Constraints
 
-Designed to fit a single student workstation running VMware Workstation Pro with conservative VM sizing. Evidence files are kept minimal and relevant. Large raw captures are excluded from version control when they are not useful to reviewers.
+Designed to fit a single student workstation running VirtualBox with conservative VM sizing. Evidence files are kept minimal and relevant. Large raw captures are excluded from version control when they are not useful to reviewers.
 
 ## Stack
 
-Sysinternals Suite · Sysmon · Windows Event Viewer · VMware Workstation Pro
+Sysinternals Suite · Sysmon · Windows Event Viewer · VirtualBox
