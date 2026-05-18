@@ -1,21 +1,21 @@
 # Lab Environment
 
-This project is conducted in a controlled virtual lab designed to reflect realistic student and entry level IT constraints while still allowing meaningful observation of Windows internals.
+This project is conducted in a controlled virtual lab designed to reflect realistic student and entry-level IT constraints while still allowing meaningful observation of Windows internals.
 
 The goal of the lab is repeatability, clarity, and isolation. All investigations are performed in virtual machines to avoid impacting the host system and to allow rollback through snapshots.
 
-## Host system
+## Host System
 
 The lab runs on a single workstation with the following specifications:
 
-- Intel i5 14400F CPU
+- Intel i5-14400F CPU
 - 48 GB DDR4 RAM
 - 512 GB NVMe storage
-- VMware Workstation Pro
+- Oracle VirtualBox
 
 These resources allow multiple Windows virtual machines to run concurrently while maintaining conservative allocations per VM.
 
-## Virtual machines
+## Virtual Machines
 
 ### Windows 11 Pro Workstation
 
@@ -41,24 +41,24 @@ Some scenarios require authentication boundaries and centralized identity.
 - Active Directory Domain Services
 - DNS
 
-This VM is only powered on when needed for domain related scenarios.
+This VM is only powered on when needed for domain-related scenarios.
 
 ## Networking
 
-Virtual machines are connected using VMware custom or host only networks to ensure isolation from the production network. No external exposure is required for any scenario in this project.
+Virtual machines are connected using VirtualBox host-only networks to ensure isolation from the production network. No external exposure is required for any scenario in this project.
 
-## Snapshot strategy
+## Snapshot Strategy
 
 Snapshots are used as controlled checkpoints:
 
 - Clean operating system baseline
 - Baseline with Sysinternals installed
 - Baseline with Sysmon installed
-- Pre scenario snapshot
-- Post scenario snapshot
+- Pre-scenario snapshot
+- Post-scenario snapshot
 
 This approach allows experiments to be repeated and mistakes to be rolled back without contaminating future observations.
 
-## Scope and safety
+## Scope and Safety
 
 All activity remains within the lab environment. No production systems are analyzed or modified. The project focuses on observation and explanation, not exploitation.
