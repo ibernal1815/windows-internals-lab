@@ -1,12 +1,16 @@
-# Windows Internals Sysinternals Lab
+# windows-internals-lab
 
-This repository documents a structured Windows internals investigation project using Microsoft Sysinternals tools and Sysmon. The goal is to build practical skill in observing and explaining Windows behavior at the process, memory, registry, file system, security, and network layers.
+A structured Windows internals investigation project using Microsoft Sysinternals tools and Sysmon. The goal is to build practical skill in observing and explaining Windows behavior at the process, memory, registry, file system, security, and network layers.
 
-All work is performed in a controlled lab environment. The focus is troubleshooting and system understanding, not malware research or offensive activity.
+## Background / Why I Built This
 
-## What this project covers
+You can read about how Windows handles processes, tokens, and services all day. At some point you have to actually watch it happen. I built this lab to get comfortable with Sysinternals as a primary investigation toolkit and to understand what normal Windows behavior looks like before trying to identify what is abnormal.
 
-1. Process behavior and parent child relationships
+Everything here is focused on system understanding and observation. The same skills that make you good at this make you better at spotting malicious activity because you know what legitimate behavior looks like first.
+
+## What This Covers
+
+1. Process behavior and parent-child relationships
 2. Application startup activity across files, registry, and DLL loading
 3. Windows services, service identity, and access boundaries
 4. Persistence mechanisms used in normal Windows operations
@@ -15,55 +19,40 @@ All work is performed in a controlled lab environment. The focus is troubleshoot
 7. Remote administration traces using PsExec in a lab context
 8. Sysmon telemetry design and practical tradeoffs
 
-## Primary tools
+## Primary Tools
 
-1. Process Explorer
-2. Process Monitor
-3. Autoruns
-4. TCPView
-5. PsExec
-6. Sysmon
+Process Explorer, Process Monitor, Autoruns, TCPView, PsExec, and Sysmon. Native Windows utilities are used when they help confirm a finding, but Sysinternals is the core tooling throughout.
 
-Native Windows utilities are used when they help confirm a finding, but Sysinternals remains the core tooling.
+## Repository Layout
 
-## Repository layout
+```
+LabOverview/
+    LabEnvironment.md
+    ToolingAndMethodology.md
+    ChangeLog.md
+Scenarios/
+    each scenario folder contains background, notes, analysis, takeaways, and evidence
+Sysmon/
+    SysmonConfig.md explains logging choices
+    Configs/ contains versioned Sysmon configurations
+References/
+    notes on Sysinternals tools and Windows internals concepts in plain language
+```
 
-The repo is organized like a lab binder. Each scenario stands on its own with a consistent structure and supporting evidence.
+## How to Use This Repo
 
-1. LabOverview
-   1. LabEnvironment.md
-   2. ToolingAndMethodology.md
-   3. ChangeLog.md
-
-2. Scenarios
-   1. Scenario folders contain background, notes, analysis, takeaways, and evidence
-
-3. Sysmon
-   1. SysmonConfig.md explains logging choices
-   2. Configs contains the versioned Sysmon configuration
-
-4. References
-   1. Notes on Sysinternals tools and Windows internals concepts written in plain language
-
-## How to use this repo
-
-If you are reading this project, start here:
+Start here:
 
 1. LabOverview/LabEnvironment.md
 2. LabOverview/ToolingAndMethodology.md
 3. Scenarios/Scenario01_ApplicationStartup
 
-Each scenario follows the same flow:
+Each scenario follows the same flow: background and question, observation using Sysinternals, analysis of findings, and practical takeaways.
 
-1. Background and question
-2. Observation using Sysinternals
-3. Analysis of findings
-4. Practical takeaways for IT operations
+## Lab Constraints
 
-## Lab constraints
+Designed to fit a single student workstation running VMware Workstation Pro with conservative VM sizing. Evidence files are kept minimal and relevant. Large raw captures are excluded from version control when they are not useful to reviewers.
 
-This project is designed to fit a single student workstation running VMware Workstation Pro with conservative VM sizing. Evidence files are kept minimal and relevant. Large raw captures are excluded from version control when they are not useful to reviewers.
+## Stack
 
-## License
-
-This project is licensed under the MIT License. See LICENSE for details.
+Sysinternals Suite · Sysmon · Windows Event Viewer · VMware Workstation Pro
