@@ -2,7 +2,7 @@
 
 This project prioritizes understanding Windows behavior through direct observation. Tools are selected based on their ability to expose system internals clearly rather than their novelty or complexity.
 
-## Core philosophy
+## Core Philosophy
 
 The methodology follows a simple loop:
 
@@ -14,15 +14,15 @@ The methodology follows a simple loop:
 
 Raw output alone is not considered evidence of understanding. Reasoning and interpretation are emphasized throughout the documentation.
 
-## Primary tools
+## Primary Tools
 
 ### Process Explorer
 
-Used to examine running processes, parent child relationships, command lines, integrity levels, tokens, and loaded modules. This tool answers questions about *what is running* and *under what context*.
+Used to examine running processes, parent-child relationships, command lines, integrity levels, tokens, and loaded modules. This tool answers questions about what is running and under what context.
 
 ### Process Monitor
 
-Used for real time and captured observation of file system, registry, process, and network activity. Filtering is applied deliberately to reduce noise and focus on the question being asked.
+Used for real-time and captured observation of file system, registry, process, and network activity. Filtering is applied deliberately to reduce noise and focus on the question being asked.
 
 ### Autoruns
 
@@ -40,11 +40,11 @@ Used in controlled scenarios to demonstrate legitimate remote execution and admi
 
 Used as a persistent telemetry source. Sysmon complements Process Monitor by recording key events over time rather than during a live capture session.
 
-## Supporting tools
+## Supporting Tools
 
-Native Windows tools such as Event Viewer, Services MMC, Task Scheduler, and command line utilities are used to validate or contextualize findings when appropriate.
+Native Windows tools such as Event Viewer, Services MMC, Task Scheduler, and command-line utilities are used to validate or contextualize findings when appropriate.
 
-## Evidence handling
+## Evidence Handling
 
 Large raw captures are not treated as deliverables. Instead:
 
@@ -52,4 +52,4 @@ Large raw captures are not treated as deliverables. Instead:
 - Findings are described in writing
 - Screenshots are used sparingly and only when they clarify a concept
 
-This mirrors real world troubleshooting, where explanation and judgment matter more than volume of data.
+This mirrors real-world troubleshooting, where explanation and judgment matter more than volume of data.
