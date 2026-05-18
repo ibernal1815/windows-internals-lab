@@ -1,0 +1,174 @@
+<!--
+  sysmon-config.xml
+  Base: SwiftOnSecurity sysmon-config (https://github.com/SwiftOnSecurity/sysmon-config)
+  Adapted for windows-internals-lab on Windows 11 with Event Viewer as the log consumer.
+
+  Philosophy: capture what matters, exclude what generates noise.
+  Every include rule has a reason. Every exclude rule has a reason.
+  This is a learning config, not a production deployment.
+-->
+
+<Sysmon schemaversion="4.90">
+
+  <HashAlgorithms>sha256</HashAlgorithms>
+  <CheckRevocation>False</CheckRevocation>
+
+  <EventFiltering>
+
+    <!-- ================================================================
+         Event ID 1 — Process Creation
+         Log all process creation with full command line and hashes.
+         Parent process tracking is critical for understanding execution chains.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <ProcessCreate onmatch="exclude">
+        <!-- Exclude high-volume legitimate system noise -->
+        <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+        <Image condition="is">C:\Windows\System32\WerFault.exe</Image>
+        <Image condition="is">C:\Windows\System32\conhost.exe</Image>
+        <ParentImage condition="is">C:\Windows\System32\services.exe</ParentImage>
+      </ProcessCreate>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 2 — File Creation Time Changed
+         Timestomping indicator. Include selectively.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <FileCreateTime onmatch="include">
+        <TargetFilename condition="contains">\Temp\</TargetFilename>
+        <TargetFilename condition="contains">\AppData\Roaming\</TargetFilename>
+        <TargetFilename condition="ends with">.exe</TargetFilename>
+        <TargetFilename condition="ends with">.dll</TargetFilename>
+        <TargetFilename condition="ends with">.ps1</TargetFilename>
+      </FileCreateTime>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 3 — Network Connection
+         Log outbound connections with process context.
+         Exclude common legitimate high-volume connections.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <NetworkConnect onmatch="exclude">
+        <Image condition="is">C:\Windows\System32\svchost.exe</Image>
+        <Image condition="is">C:\Windows\System32\lsass.exe</Image>
+        <DestinationPort condition="is">443</DestinationPort>
+        <DestinationIsIpv6 condition="is">true</DestinationIsIpv6>
+      </NetworkConnect>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 5 — Process Terminated
+         Excluded by default. Not useful for internals investigation.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <ProcessTerminate onmatch="include">
+        <Rule groupRelation="or">
+          <Image condition="contains">mimikatz</Image>
+        </Rule>
+      </ProcessTerminate>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 7 — Image Loaded
+         Log unsigned or suspicious DLL loads.
+         Exclude known signed Microsoft DLLs to reduce volume.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <ImageLoad onmatch="include">
+        <Signed condition="is">false</Signed>
+        <ImageLoaded condition="contains">\Temp\</ImageLoaded>
+        <ImageLoaded condition="contains">\AppData\</ImageLoaded>
+      </ImageLoad>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 8 — CreateRemoteThread
+         Cross-process thread injection indicator.
+         Log all instances.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <CreateRemoteThread onmatch="exclude">
+        <!-- Exclude known legitimate cross-process behavior -->
+        <SourceImage condition="is">C:\Windows\System32\wbem\WmiPrvSE.exe</SourceImage>
+      </CreateRemoteThread>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 10 — ProcessAccess
+         Log access to sensitive processes, especially LSASS.
+         Credential dumping attempts will show here.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <ProcessAccess onmatch="include">
+        <TargetImage condition="ends with">lsass.exe</TargetImage>
+        <TargetImage condition="ends with">winlogon.exe</TargetImage>
+        <GrantedAccess condition="is">0x1FFFFF</GrantedAccess>
+        <GrantedAccess condition="is">0x1010</GrantedAccess>
+      </ProcessAccess>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 11 — FileCreate
+         Log file creation in staging and persistence locations.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <FileCreate onmatch="include">
+        <TargetFilename condition="contains">\Temp\</TargetFilename>
+        <TargetFilename condition="contains">\Startup\</TargetFilename>
+        <TargetFilename condition="contains">\AppData\Roaming\Microsoft\Windows\Start Menu\</TargetFilename>
+        <TargetFilename condition="ends with">.exe</TargetFilename>
+        <TargetFilename condition="ends with">.bat</TargetFilename>
+        <TargetFilename condition="ends with">.ps1</TargetFilename>
+        <TargetFilename condition="ends with">.vbs</TargetFilename>
+      </FileCreate>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event IDs 12, 13, 14 — Registry Events
+         Log persistence-related registry paths.
+         Exclude high-volume system churn.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <RegistryEvent onmatch="include">
+        <TargetObject condition="contains">CurrentVersion\Run</TargetObject>
+        <TargetObject condition="contains">CurrentVersion\RunOnce</TargetObject>
+        <TargetObject condition="contains">Winlogon</TargetObject>
+        <TargetObject condition="contains">CurrentVersion\Image File Execution Options</TargetObject>
+        <TargetObject condition="contains">CurrentVersion\AppCompatFlags</TargetObject>
+        <TargetObject condition="contains">\Services\</TargetObject>
+      </RegistryEvent>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event IDs 17, 18 — Pipe Events
+         Named pipe creation and connection.
+         Surfaces PsExec, common lateral movement, and C2 frameworks.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <PipeEvent onmatch="include">
+        <PipeName condition="contains">psexec</PipeName>
+        <PipeName condition="contains">mojo</PipeName>
+        <PipeName condition="contains">postex</PipeName>
+        <PipeName condition="contains">status_</PipeName>
+        <PipeName condition="contains">msagent</PipeName>
+      </PipeEvent>
+    </RuleGroup>
+
+    <!-- ================================================================
+         Event ID 22 — DNS Query
+         Log DNS lookups with the querying process.
+         Useful for correlating network activity to process context.
+         ================================================================ -->
+    <RuleGroup name="" groupRelation="or">
+      <DnsQuery onmatch="exclude">
+        <QueryName condition="ends with">.microsoft.com</QueryName>
+        <QueryName condition="ends with">.windowsupdate.com</QueryName>
+        <QueryName condition="ends with">.windows.com</QueryName>
+      </DnsQuery>
+    </RuleGroup>
+
+  </EventFiltering>
+
+</Sysmon>
