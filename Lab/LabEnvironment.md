@@ -18,8 +18,8 @@ Two virtual machines are used throughout this lab. Both run on the host workstat
 
 | Machine | OS | RAM | Cores | Role |
 |---|---|---|---|---|
-| Victim | Windows 11 Pro | 12GB | 4 | Instrumented target for investigation scenarios |
-| Analyst | Windows 11 Pro | 12GB | 4 | Clean workstation used for triage and analysis |
+| Victim | Windows 11 Pro | 8GB | 4 | Instrumented target for investigation scenarios |
+| Analyst | Windows 11 Pro | 8GB | 4 | Clean workstation used for triage and analysis |
 
 ## Network Configuration
 
