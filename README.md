@@ -48,8 +48,8 @@ Two virtual machines running in VirtualBox on a single host workstation. Both ma
 
 | Machine | OS | RAM | Cores | Role |
 |---|---|---|---|---|
-| Victim | Windows 11 Pro | 12GB | 4 | Instrumented target |
-| Analyst | Windows 11 Pro | 12GB | 4 | Triage and analysis workstation |
+| Victim | Windows 11 Pro | 8GB | 4 | Instrumented target |
+| Analyst | Windows 11 Pro | 8GB | 4 | Triage and analysis workstation |
 
 Host specifications and full VM configuration are documented in `Lab/LabEnvironment.md` and `Lab/VMSetup.md`.
 
