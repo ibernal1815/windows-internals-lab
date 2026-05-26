@@ -15,9 +15,9 @@ The victim machine is a clean Windows 11 Pro installation representing an enterp
 | Setting | Value |
 |---|---|
 | OS | Windows 11 Pro |
-| RAM | 12GB |
+| RAM | 8GB |
 | CPU Cores | 4 |
-| Storage | 100GB dynamically allocated VDI |
+| Storage | 80GB dynamically allocated VDI |
 | Network Adapter | Host-only adapter only |
 | Clipboard | Disabled |
 | Drag and Drop | Disabled |
@@ -49,9 +49,9 @@ The analyst machine is a Windows 11 Pro installation used exclusively for triage
 | Setting | Value |
 |---|---|
 | OS | Windows 11 Pro |
-| RAM | 12GB |
+| RAM | 8GB |
 | CPU Cores | 4 |
-| Storage | 100GB dynamically allocated VDI |
+| Storage | 80GB dynamically allocated VDI |
 | Network Adapter | Host-only adapter only |
 | Clipboard | Bidirectional (host to analyst only) |
 | Drag and Drop | Disabled |
